@@ -30,7 +30,7 @@ import (
 	"regexp"
 	"strings"
 
-	"fortio.org/fortio/log"
+	"fortio.org/log"
 )
 
 // RegsubInput is the input pattern+replacement string (or pattern)
@@ -46,13 +46,13 @@ type regsub struct {
 }
 
 /*
-sed -E -e 's/^([^": }\t]+)/"\1"/' \
-    -e "s/ -- .*$//g" \
-    -e "s/ = /: /g" \
-    -e 's/\["/"/g' \
-    -e 's/\"]/"/g' \
-    -e 's/^([ \t]*)\[([0-9.]+)\]:/\1"\2":/' \
-    -e 's/^([ \t]*)nil,$/\1null,/'
+	sed -E -e 's/^([^": }\t]+)/"\1"/' \
+	    -e "s/ -- .*$//g" \
+	    -e "s/ = /: /g" \
+	    -e 's/\["/"/g' \
+	    -e 's/\"]/"/g' \
+	    -e 's/^([ \t]*)\[([0-9.]+)\]:/\1"\2":/' \
+	    -e 's/^([ \t]*)nil,$/\1null,/'
 */
 var rei = []RegsubInput{
 	{`^([^": }\t]+)`, `"$1"`},
@@ -129,7 +129,7 @@ func Lua2Json(in io.Reader, out io.Writer, skipTop bool, bufSizeMb float64) {
 			inArray = true
 		}
 		//		/: / {inarray=0}
-		if strings.Index(line, ": ") >= 0 {
+		if strings.Contains(line, ": ") {
 			inArray = false
 		}
 		//		/{$/ {startnest=1}
